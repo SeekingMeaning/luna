@@ -6,3 +6,4 @@ testing
 test_runner
 test.luna
 *.exe
+zig-cache

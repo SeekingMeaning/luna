@@ -7,11 +7,17 @@
 
 #include "hash.h"
 
+#ifdef WIN32
+#define LUNA_INLINE
+#else
+#define LUNA_INLINE inline
+#endif
+
 /*
  * Set hash `key` to `val`.
  */
 
-inline void
+LUNA_INLINE void
 luna_hash_set(khash_t(value) *self, char *key, luna_object_t *val) {
   int ret;
   khiter_t k = kh_put(value, self, key, &ret);
@@ -22,7 +28,7 @@ luna_hash_set(khash_t(value) *self, char *key, luna_object_t *val) {
  * Get hash `key`, or NULL.
  */
 
-inline luna_object_t *
+LUNA_INLINE luna_object_t *
 luna_hash_get(khash_t(value) *self, char *key) {
   khiter_t k = kh_get(value, self, key);
   return k == kh_end(self) ? NULL : kh_value(self, k);
@@ -32,7 +38,7 @@ luna_hash_get(khash_t(value) *self, char *key) {
  * Check if hash `key` exists.
  */
 
-inline int
+LUNA_INLINE int
 luna_hash_has(khash_t(value) *self, char *key) {
   khiter_t k = kh_get(value, self, key);
   return kh_exist(self, k);
